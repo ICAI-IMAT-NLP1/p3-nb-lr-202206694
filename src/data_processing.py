@@ -22,7 +22,11 @@ def read_sentiment_examples(infile: str) -> List[SentimentExample]:
     examples = []
     with open(infile, 'r', encoding='utf-8') as file:
         for line in file:
-            sentence, label = line.strip().split('\t')
+            parts = line.strip().split('\t')
+            if len(parts) != 2:
+                print(f"Ignoring malformed line: {line.strip()}")
+                continue
+            sentence, label = parts
             tokenized_sentence = tokenize(sentence)
             examples.append(SentimentExample(tokenized_sentence, int(label)))
     return examples
