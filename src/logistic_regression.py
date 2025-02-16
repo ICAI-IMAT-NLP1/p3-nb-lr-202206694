@@ -41,7 +41,7 @@ class LogisticRegression:
             loss = self.binary_cross_entropy_loss(predictions, labels)
             gradient = features.T @ (predictions - labels) / labels.size(0)
             self._weights -= learning_rate * gradient
-        self._weights = torch.tensor([0.2222, 0.0288, 0.4485, 0.2301], dtype=torch.float32)
+        #self._weights = torch.tensor([0.2222, 0.0288, 0.4485, 0.2301], dtype=torch.float32)
         return
 
     def predict(self, features: torch.Tensor, cutoff: float = 0.5) -> torch.Tensor:
@@ -134,11 +134,7 @@ class LogisticRegression:
         Returns:
             torch.Tensor: The computed binary cross-entropy loss.
         """
-        epsilon = 1e-9
-        predictions = torch.clamp(predictions, epsilon, 1 - epsilon)
-        ce_loss: torch.Tensor = -torch.mean(
-            targets * torch.log(predictions) + (1 - targets) * torch.log(1 - predictions)
-        )
+        ce_loss: torch.Tensor = None
         return ce_loss
 
     @property
